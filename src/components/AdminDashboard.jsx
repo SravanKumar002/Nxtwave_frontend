@@ -52,7 +52,7 @@ const AdminDashboard = () => {
         setLoading(true);
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "http://localhost:3000/api/admin/attendance",
+          "https://nxtwave-backend-vh3s.onrender.com/api/admin/attendance",
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -23,7 +23,7 @@ const AdminLogin = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/admin/login",
+        "https://nxtwave-backend-vh3s.onrender.com/api/admin/login",
         formData
       );
       localStorage.setItem("adminToken", res.data.token);
