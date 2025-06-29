@@ -23,6 +23,7 @@ import {
   Stack,
   Tabs,
   Tab,
+  TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Pie } from "react-chartjs-2";
@@ -44,6 +45,12 @@ const AdminDashboard = () => {
     lateArrivals: [],
   });
   const [tabValue, setTabValue] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    // Default today in yyyy-mm-dd format
+    const today = new Date();
+    return today.toISOString().slice(0, 10);
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,23 +59,27 @@ const AdminDashboard = () => {
         setLoading(true);
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "https://nxtwave-backend-vh3s.onrender.com/api/admin/attendance",
+          `https://attendence-backend-t5au.onrender.com/api/admin/attendance?date=${selectedDate}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setRecords(res.data);
-        calculateMetrics(res.data);
+
+        const todayRecords = res.data;
+
+        setRecords(todayRecords);
+        calculateMetrics(todayRecords);
       } catch (err) {
         console.error(err);
+        alert("Failed to fetch attendance data.");
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [selectedDate]);
 
   const calculateMetrics = (attendanceRecords) => {
     const totalRecords = attendanceRecords.length;
@@ -207,6 +218,19 @@ const AdminDashboard = () => {
       </AppBar>
 
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        {/* Date picker */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="subtitle1" gutterBottom>
+            Select Date:
+          </Typography>
+          <TextField
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+          />
+        </Box>
+
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
             <CircularProgress />
