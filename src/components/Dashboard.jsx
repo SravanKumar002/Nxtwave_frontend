@@ -1,9 +1,8 @@
-// Dashboard.js
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getProfile, getAttendance } from "../utils/api";
-import { Box, Typography, Tab, Tabs } from "@mui/material";
+import { Box, Typography, Tab, Tabs, useMediaQuery } from "@mui/material";
+
 import CheckIn from "./CheckIn";
 import AttendanceHistory from "./AttendanceHistory";
 import Navbar from "./Navbar";
@@ -11,12 +10,14 @@ import BootcampRecords from "./BootcampRecords";
 import WorkshopRecords from "./WorkshopRecords";
 import DeploymentRecords from "./DeploymentRecords";
 import LeaveRecords from "./LeaveRecords";
+// import StaticContent from "./StaticContent";
 
 const Dashboard = () => {
   const [employee, setEmployee] = useState(null);
   const [tabValue, setTabValue] = useState(0);
   const [attendance, setAttendance] = useState([]);
-  // const navigate = useNavigate();
+
+  const isMobile = useMediaQuery("(max-width:768px)");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,34 +40,64 @@ const Dashboard = () => {
     setTabValue(newValue);
   };
 
-  if (!employee) {
-    return <div>Loading...</div>;
-  }
+  if (!employee) return <div>Loading...</div>;
 
   return (
     <Box>
       <Navbar employee={employee} />
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
-          Welcome, {employee.name}
-        </Typography>
 
-        <Tabs value={tabValue} onChange={handleTabChange} variant="scrollable">
-          <Tab label="Check In" />
-          <Tab label="Attendance History" />
-          <Tab label="Bootcamp" />
-          <Tab label="Workshop" />
-          <Tab label="Deployment" />
-          <Tab label="Leave Records" />
-        </Tabs>
+      {/* Tabs + Content */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          height: "100%",
+        }}
+      >
+        {/* Tabs Section */}
+        <Box
+          sx={{
+            width: isMobile ? "100%" : 200,
+            backgroundColor: "#f5f5f5",
+            boxShadow: 1,
+            p: 2,
+          }}
+        >
+          <Tabs
+            value={tabValue}
+            onChange={handleTabChange}
+            orientation={isMobile ? "horizontal" : "vertical"}
+            variant={isMobile ? "scrollable" : "fullWidth"}
+            scrollButtons={isMobile ? "auto" : false}
+            sx={{
+              borderRight: isMobile ? 0 : 1,
+              borderBottom: isMobile ? 1 : 0,
+              borderColor: "divider",
+            }}
+          >
+            <Tab label="Check In" />
+            <Tab label="Attendance History" />
+            <Tab label="Bootcamp" />
+            <Tab label="Workshop" />
+            <Tab label="Deployment" />
+            <Tab label="Leave Records" />
+            {/* <Tab label="Static" /> */}
+          </Tabs>
+        </Box>
 
-        <Box sx={{ mt: 3 }}>
+        {/* Content Section */}
+        <Box sx={{ flexGrow: 1, p: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            Welcome, {employee.name}
+          </Typography>
+
           {tabValue === 0 && <CheckIn setAttendance={setAttendance} />}
           {tabValue === 1 && <AttendanceHistory attendance={attendance} />}
           {tabValue === 2 && <BootcampRecords attendance={attendance} />}
           {tabValue === 3 && <WorkshopRecords attendance={attendance} />}
           {tabValue === 4 && <DeploymentRecords attendance={attendance} />}
           {tabValue === 5 && <LeaveRecords attendance={attendance} />}
+          {/* {tabValue === 6 && <StaticContent />} */}
         </Box>
       </Box>
     </Box>
