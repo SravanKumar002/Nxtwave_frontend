@@ -60,7 +60,7 @@ const AdminDashboard = () => {
         const token = localStorage.getItem("token");
         console.log(token);
         const res = await axios.get(
-          `https://attendence-backend-t5au.onrender.com/api/admin/attendance?date=${selectedDate}`,
+          `https://attendence-backend-1.onrender.com/api/admin/attendance?date=${selectedDate}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

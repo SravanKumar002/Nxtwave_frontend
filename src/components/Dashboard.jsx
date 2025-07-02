@@ -11,6 +11,8 @@ import WorkshopRecords from "./WorkshopRecords";
 import DeploymentRecords from "./DeploymentRecords";
 import LeaveRecords from "./LeaveRecords";
 // import StaticContent from "./StaticContent";
+// import ResponsiveContent from "./ResponsiveContent";
+// import DynamicContent from "./DynamicContent";
 
 const Dashboard = () => {
   const [employee, setEmployee] = useState(null);
@@ -81,7 +83,9 @@ const Dashboard = () => {
             <Tab label="Workshop" />
             <Tab label="Deployment" />
             <Tab label="Leave Records" />
-            {/* <Tab label="Static" /> */}
+            {/* <Tab label="Static" />
+            <Tab label="Responsive" />
+            <Tab label="Dynamic" /> */}
           </Tabs>
         </Box>
 
@@ -96,8 +100,10 @@ const Dashboard = () => {
           {tabValue === 2 && <BootcampRecords attendance={attendance} />}
           {tabValue === 3 && <WorkshopRecords attendance={attendance} />}
           {tabValue === 4 && <DeploymentRecords attendance={attendance} />}
-          {tabValue === 5 && <LeaveRecords attendance={attendance} />}
-          {/* {tabValue === 6 && <StaticContent />} */}
+          {tabValue === 3 && <LeaveRecords attendance={attendance} />}
+          {/* {tabValue === 4 && <StaticContent />}
+          {tabValue === 5 && <ResponsiveContent />}
+          {tabValue === 6 && <DynamicContent />} */}
         </Box>
       </Box>
     </Box>

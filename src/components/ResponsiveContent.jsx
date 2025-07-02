@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import topics from "../Topics/topics";
+import topics from "../Topics/topics_responsive";
 import {
   Table,
   TableBody,
@@ -18,7 +18,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-export default function StaticTopics() {
+export default function ResponsiveContent() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -69,7 +69,7 @@ export default function StaticTopics() {
   return (
     <Box sx={{ width: "100%", p: 2 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>
-        All Static Topics
+        All Responsive Topics
       </Typography>
 
       <TableContainer component={Paper}>
