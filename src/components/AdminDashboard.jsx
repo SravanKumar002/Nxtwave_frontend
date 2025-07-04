@@ -46,7 +46,6 @@ const AdminDashboard = () => {
   });
   const [tabValue, setTabValue] = useState(0);
   const [selectedDate, setSelectedDate] = useState(() => {
-    // Default today in yyyy-mm-dd format
     const today = new Date();
     return today.toISOString().slice(0, 10);
   });
@@ -60,7 +59,7 @@ const AdminDashboard = () => {
         const token = localStorage.getItem("token");
         console.log(token);
         const res = await axios.get(
-          `https://attendence-backend-t5au.onrender.com/api/admin/attendance?date=${selectedDate}`,
+          `http://localhost:3000/api/admin/attendance?date=${selectedDate}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
