@@ -7,7 +7,7 @@ export const CHECK_IN_CONFIG = {
   },
 
   dayWindows: {
-    5: { startHour: 9, startMinute: 0, endHour: 18, endMinute: 30 }, // Friday
+    5: { startHour: 8, startMinute: 0, endHour: 18, endMinute: 30 }, // Friday
     6: { startHour: 10, startMinute: 0, endHour: 18, endMinute: 40 }, // Saturday
   },
 
