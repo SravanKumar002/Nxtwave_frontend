@@ -54,7 +54,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
+       try {
         setLoading(true);
         const token = localStorage.getItem("token");
         console.log(token);
@@ -66,7 +66,6 @@ const AdminDashboard = () => {
             },
           }
         );
-
         const todayRecords = res.data;
 
         setRecords(todayRecords);
