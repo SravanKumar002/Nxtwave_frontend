@@ -30,7 +30,7 @@ const AdminLogin = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://attendence-backend-t5au.onrender.com/api/admin/login",
+        "https://attendence-backend-t5au.onrender.com/api/admin/attendance",
         formData
       );
       localStorage.setItem("adminToken", res.data.token);
