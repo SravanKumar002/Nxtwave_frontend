@@ -15,7 +15,7 @@ export const CHECK_IN_CONFIG = {
 
   specialDates: {
     "2023-12-24": {
-      startHour: 10,
+      startHour: 9,
       startMinute: 0,
       endHour: 12,
       endMinute: 0,
