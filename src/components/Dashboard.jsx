@@ -100,7 +100,7 @@ const Dashboard = () => {
           {tabValue === 2 && <BootcampRecords attendance={attendance} />}
           {tabValue === 3 && <WorkshopRecords attendance={attendance} />}
           {tabValue === 4 && <DeploymentRecords attendance={attendance} />}
-          {tabValue === 3 && <LeaveRecords attendance={attendance} />}
+          {tabValue === 5 && <LeaveRecords attendance={attendance} />}
           {/* {tabValue === 4 && <StaticContent />}
           {tabValue === 5 && <ResponsiveContent />}
           {tabValue === 6 && <DynamicContent />} */}
