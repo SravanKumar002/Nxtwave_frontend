@@ -79,10 +79,10 @@ const Dashboard = () => {
           >
             <Tab label="Check In" />
             <Tab label="Attendance History" />
-            <Tab label="Bootcamp" />
+{/*             <Tab label="Bootcamp" />
             <Tab label="Workshop" />
             <Tab label="Deployment" />
-            <Tab label="Leave Records" />
+            <Tab label="Leave Records" /> */}
             {/* <Tab label="Static" />
             <Tab label="Responsive" />
             <Tab label="Dynamic" /> */}
@@ -97,10 +97,10 @@ const Dashboard = () => {
 
           {tabValue === 0 && <CheckIn setAttendance={setAttendance} />}
           {tabValue === 1 && <AttendanceHistory attendance={attendance} />}
-          {tabValue === 2 && <BootcampRecords attendance={attendance} />}
+{/*           {tabValue === 2 && <BootcampRecords attendance={attendance} />}
           {tabValue === 3 && <WorkshopRecords attendance={attendance} />}
           {tabValue === 4 && <DeploymentRecords attendance={attendance} />}
-          {tabValue === 5 && <LeaveRecords attendance={attendance} />}
+          {tabValue === 5 && <LeaveRecords attendance={attendance} />} */}
           
           {/* {tabValue === 4 && <StaticContent />}
           {tabValue === 5 && <ResponsiveContent />}
