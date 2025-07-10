@@ -13,7 +13,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Cookies from "js-cookie";
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -34,14 +33,7 @@ const AdminLogin = () => {
         "https://attendence-backend-t5au.onrender.com/api/admin/login",
         formData
       );
-
-      // Save token in cookie instead of localStorage
-      Cookies.set("adminToken", res.data.token, {
-        expires: 1,
-        secure: true,
-        sameSite: "Strict",
-      });
-
+      localStorage.setItem("adminToken", res.data.token);
       toast.success("Admin login successful");
 
       startTransition(() => {
