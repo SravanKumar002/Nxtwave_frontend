@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import {
   AppBar,
   Toolbar,
@@ -54,10 +55,15 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-       try {
+      try {
         setLoading(true);
-        const token = localStorage.getItem("token");
-        console.log(token);
+        const token = Cookies.get("adminToken");
+        if (!token) {
+          alert("Admin token not found. Please log in again.");
+          navigate("/admin/login");
+          return;
+        }
+
         const res = await axios.get(
           `https://attendence-backend-t5au.onrender.com/api/admin/attendance?date=${selectedDate}`,
           {
@@ -66,8 +72,8 @@ const AdminDashboard = () => {
             },
           }
         );
-        const todayRecords = res.data;
 
+        const todayRecords = res.data;
         setRecords(todayRecords);
         calculateMetrics(todayRecords);
       } catch (err) {
@@ -78,7 +84,7 @@ const AdminDashboard = () => {
       }
     };
     fetchData();
-  }, [selectedDate]);
+  }, [selectedDate, navigate]);
 
   const calculateMetrics = (attendanceRecords) => {
     const totalRecords = attendanceRecords.length;
@@ -206,13 +212,25 @@ const AdminDashboard = () => {
               style={{ height: 40 }}
             />
           </Box>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => navigate("/")}
-          >
-            User Dashboard
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => navigate("/")}
+            >
+              User Dashboard
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => {
+                Cookies.remove("adminToken");
+                navigate("/admin-login");
+              }}
+            >
+              Logout
+            </Button>
+          </Stack>
         </Toolbar>
       </AppBar>
 
@@ -236,7 +254,7 @@ const AdminDashboard = () => {
           </Box>
         ) : (
           <>
-            {/* Key Metrics Section */}
+            {/* Metrics */}
             <Grid container spacing={3} sx={{ mb: 3 }}>
               <Grid item xs={12} md={3}>
                 <Card elevation={3}>
@@ -299,8 +317,8 @@ const AdminDashboard = () => {
               </Grid>
             </Grid>
 
-            {/* Visualization Section */}
-            <Grid container spacing={3} sx={{ mb: 3 }}>
+            {/* Chart + Recent */}
+            <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <Paper sx={{ p: 3, height: "100%" }}>
                   <Typography variant="h6" gutterBottom>
@@ -382,7 +400,7 @@ const AdminDashboard = () => {
               </Grid>
             </Grid>
 
-            {/* Detailed Tables Section */}
+            {/* Tabs Section */}
             <Paper sx={{ p: 2, mt: 3 }}>
               <Tabs value={tabValue} onChange={handleTabChange} sx={{ mb: 2 }}>
                 <Tab label={`Present (${metrics.presentCount})`} />
