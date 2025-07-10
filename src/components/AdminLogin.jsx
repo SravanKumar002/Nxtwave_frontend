@@ -1,33 +1,26 @@
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { TextField, Button, Box, Container, Typography } from "@mui/material";
 import axios from "axios";
-import {
-  TextField,
-  Button,
-  Box,
-  Container,
-  Typography,
-  InputAdornment,
-  IconButton,
-  CircularProgress,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const AdminLogin = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
       const res = await axios.post(
         "https://attendence-backend-t5au.onrender.com/api/admin/login",
@@ -35,19 +28,10 @@ const AdminLogin = () => {
       );
       localStorage.setItem("adminToken", res.data.token);
       toast.success("Admin login successful");
-
-      startTransition(() => {
-        navigate("/admin");
-      });
+      navigate("/admin");
     } catch (error) {
       toast.error(error.response?.data?.error || "Admin login failed");
-    } finally {
-      setLoading(false);
     }
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -80,7 +64,6 @@ const AdminLogin = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            autoFocus
           />
           <TextField
             margin="normal"
@@ -88,31 +71,17 @@ const AdminLogin = () => {
             fullWidth
             name="password"
             label="Password"
-            type={showPassword ? "text" : "password"}
+            type="password"
             value={formData.password}
             onChange={handleChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            disabled={loading || isPending}
             sx={{ mt: 3, mb: 2 }}
           >
-            {loading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Sign In"
-            )}
+            Sign In
           </Button>
         </Box>
       </Box>
